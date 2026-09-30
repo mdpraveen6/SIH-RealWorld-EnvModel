@@ -1,0 +1,38 @@
+# ROS 2 build artifacts
+build/
+install/
+log/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# ROS / Gazebo generated files
+.ros/
+.gz/
+.gazebo/
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python logs
+*.log
+
+# Secrets/environment files
+.env
+.env.*
+
+# YOLO runtime/cache files
+runs/
+wandb/

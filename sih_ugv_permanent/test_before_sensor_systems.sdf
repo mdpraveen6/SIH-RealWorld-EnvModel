@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <world name="backup_test">
+
+    <include>
+      <uri>model://sih_ugv</uri>
+      <pose>0 0 0.30 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://baylands_terrain</uri>
+      <pose>0 0 -1.0 0 0 0</pose>
+    </include>
+
+
+    <light name="sih_sun" type="directional">
+      <pose>0 0 50 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <direction>-0.5 0.3 -1</direction>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+    </light>
+    <physics name="1ms" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+  </world>
+</sdf>

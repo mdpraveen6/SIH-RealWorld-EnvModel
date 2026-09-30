@@ -1,0 +1,878 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+
+  <model name="sih_ugv">
+
+    <!-- Vehicle origin is approximately at the wheel-ground level -->
+    <pose>0 0 0.30 0 0 0</pose>
+    <static>false</static>
+    <self_collide>false</self_collide>
+
+    <!-- ========================================================= -->
+    <!-- MAIN CHASSIS -->
+    <!-- ========================================================= -->
+
+    <link name="base_link">
+
+      <pose>0 0 1.05 0 0 0</pose>
+
+      <inertial>
+        <mass>4200</mass>
+        <inertia>
+          <ixx>2600</ixx>
+          <iyy>7000</iyy>
+          <izz>7600</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <!-- Main armored body -->
+      <collision name="body_collision">
+        <geometry>
+          <box>
+            <size>4.9 2.05 1.05</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name="body">
+        <geometry>
+          <box>
+            <size>4.9 2.05 1.05</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.12 0.18 0.08 1</ambient>
+          <diffuse>0.18 0.27 0.12 1</diffuse>
+          <specular>0.15 0.15 0.15 1</specular>
+          <roughness>0.8</roughness>
+        </material>
+      </visual>
+
+      <!-- Lower belly armor -->
+      <collision name="belly_collision">
+        <pose>0 0 -0.55 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>4.6 1.8 0.20</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name="belly">
+        <pose>0 0 -0.55 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>4.6 1.8 0.20</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.07 0.09 0.06 1</ambient>
+          <diffuse>0.10 0.13 0.08 1</diffuse>
+        </material>
+      </visual>
+
+    </link>
+
+
+    <!-- ========================================================= -->
+    <!-- FRONT ARMOR / HOOD -->
+    <!-- ========================================================= -->
+
+    <link name="front_hood">
+      <pose>1.55 0 1.65 0 -0.12 0</pose>
+
+      <collision name="hood_collision">
+        <geometry>
+          <box>
+            <size>1.65 1.95 0.45</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name="hood">
+        <geometry>
+          <box>
+            <size>1.65 1.95 0.45</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.16 0.23 0.10 1</ambient>
+          <diffuse>0.22 0.32 0.14 1</diffuse>
+        </material>
+      </visual>
+    </link>
+
+    <joint name="front_hood_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>front_hood</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- ARMORED CABIN -->
+    <!-- ========================================================= -->
+
+    <link name="armored_cabin">
+      <pose>0.25 0 2.00 0 0 0</pose>
+
+      <collision name="cabin_collision">
+        <geometry>
+          <box>
+            <size>2.75 1.90 1.45</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name="cabin">
+        <geometry>
+          <box>
+            <size>2.75 1.90 1.45</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.12 0.19 0.08 1</ambient>
+          <diffuse>0.18 0.28 0.12 1</diffuse>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint name="cabin_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>armored_cabin</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- WINDSHIELD LEFT -->
+    <!-- ========================================================= -->
+
+    <link name="windshield_left">
+      <pose>0.85 0.48 2.15 0 -0.20 0</pose>
+
+      <visual name="glass">
+        <geometry>
+          <box>
+            <size>0.95 0.035 0.75</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.015 0.02 0.025 1</ambient>
+          <diffuse>0.025 0.035 0.045 1</diffuse>
+          <specular>0.7 0.7 0.7 1</specular>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint name="windshield_left_joint" type="fixed">
+      <parent>armored_cabin</parent>
+      <child>windshield_left</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- WINDSHIELD RIGHT -->
+    <!-- ========================================================= -->
+
+    <link name="windshield_right">
+      <pose>0.85 -0.48 2.15 0 -0.20 0</pose>
+
+      <visual name="glass">
+        <geometry>
+          <box>
+            <size>0.95 0.035 0.75</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.015 0.02 0.025 1</ambient>
+          <diffuse>0.025 0.035 0.045 1</diffuse>
+          <specular>0.7 0.7 0.7 1</specular>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint name="windshield_right_joint" type="fixed">
+      <parent>armored_cabin</parent>
+      <child>windshield_right</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- FRONT BUMPER -->
+    <!-- ========================================================= -->
+
+    <link name="front_bumper">
+      <pose>2.45 0 0.95 0 0 0</pose>
+
+      <collision name="bumper_collision">
+        <geometry>
+          <box>
+            <size>0.30 2.25 0.40</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name="bumper">
+        <geometry>
+          <box>
+            <size>0.30 2.25 0.40</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.025 0.03 0.025 1</ambient>
+          <diffuse>0.04 0.05 0.04 1</diffuse>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint name="bumper_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>front_bumper</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- BULL BAR -->
+    <!-- ========================================================= -->
+
+    <link name="bullbar">
+
+      <pose>2.55 0 1.15 0 0 0</pose>
+
+      <visual name="upper_bar">
+        <pose>0 0 0.35 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.10</radius>
+            <length>2.20</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.02 0.025 0.02 1</ambient>
+          <diffuse>0.035 0.04 0.035 1</diffuse>
+        </material>
+      </visual>
+
+      <visual name="lower_bar">
+        <pose>0 0 -0.15 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.10</radius>
+            <length>2.20</length>
+          </cylinder>
+        </geometry>
+      </visual>
+
+      <visual name="left_support">
+        <pose>0 0.85 0.10 0 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.10</radius>
+            <length>0.70</length>
+          </cylinder>
+        </geometry>
+      </visual>
+
+      <visual name="right_support">
+        <pose>0 -0.85 0.10 0 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.10</radius>
+            <length>0.70</length>
+          </cylinder>
+        </geometry>
+      </visual>
+
+    </link>
+
+    <joint name="bullbar_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>bullbar</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- FRONT GRILLE -->
+    <!-- ========================================================= -->
+
+    <link name="front_grille">
+      <pose>2.56 0 1.42 0 0 0</pose>
+
+      <visual name="grille">
+        <geometry>
+          <box>
+            <size>0.08 1.45 0.50</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.015 0.015 0.015 1</ambient>
+          <diffuse>0.02 0.02 0.02 1</diffuse>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint name="grille_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>front_grille</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- HEADLIGHTS -->
+    <!-- ========================================================= -->
+
+    <link name="front_lights">
+      <pose>2.62 0 1.55 0 0 0</pose>
+
+      <visual name="left_headlight">
+        <pose>0 0.65 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.08 0.35 0.22</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.8 0.8 0.65 1</ambient>
+          <diffuse>0.9 0.9 0.75 1</diffuse>
+          <emissive>0.6 0.6 0.4 1</emissive>
+        </material>
+      </visual>
+
+      <visual name="right_headlight">
+        <pose>0 -0.65 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.08 0.35 0.22</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.8 0.8 0.65 1</ambient>
+          <diffuse>0.9 0.9 0.75 1</diffuse>
+          <emissive>0.6 0.6 0.4 1</emissive>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint name="front_lights_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>front_lights</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- SIDE STEPS -->
+    <!-- ========================================================= -->
+
+    <link name="left_side_step">
+      <pose>0 1.18 0.78 0 0 0</pose>
+
+      <visual name="step">
+        <geometry>
+          <box>
+            <size>2.50 0.25 0.15</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.025 0.03 0.025 1</ambient>
+          <diffuse>0.04 0.05 0.04 1</diffuse>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint name="left_step_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>left_side_step</child>
+    </joint>
+
+
+    <link name="right_side_step">
+      <pose>0 -1.18 0.78 0 0 0</pose>
+
+      <visual name="step">
+        <geometry>
+          <box>
+            <size>2.50 0.25 0.15</size>
+          </box>
+        </geometry>
+      </visual>
+
+    </link>
+
+    <joint name="right_step_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>right_side_step</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- FOUR WHEELS -->
+    <!-- ========================================================= -->
+
+    <link name="front_left_wheel_link">
+      <pose>1.55 1.13 0.68 0 0 0</pose>
+
+      <inertial>
+        <mass>85</mass>
+        <inertia>
+          <ixx>18</ixx>
+          <iyy>18</iyy>
+          <izz>30</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="tire_collision">
+        <pose>0 0 0 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.68</radius>
+            <length>0.38</length>
+          </cylinder>
+        </geometry>
+      </collision>
+
+      <visual name="tire">
+        <pose>0 0 0 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.68</radius>
+            <length>0.38</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.015 0.015 0.015 1</ambient>
+          <diffuse>0.025 0.025 0.025 1</diffuse>
+        </material>
+      </visual>
+
+      <visual name="rim">
+        <geometry>
+          <cylinder>
+            <radius>0.34</radius>
+            <length>0.41</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.10 0.10 0.09 1</ambient>
+          <diffuse>0.18 0.18 0.16 1</diffuse>
+        </material>
+      </visual>
+
+    </link>
+
+
+    <link name="front_right_wheel_link">
+      <pose>1.55 -1.13 0.68 0 0 0</pose>
+
+      <inertial>
+        <mass>85</mass>
+        <inertia>
+          <ixx>18</ixx>
+          <iyy>18</iyy>
+          <izz>30</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="tire_collision">
+        <pose>0 0 0 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.68</radius>
+            <length>0.38</length>
+          </cylinder>
+        </geometry>
+      </collision>
+
+      <visual name="tire">
+        <pose>0 0 0 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.68</radius>
+            <length>0.38</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.015 0.015 0.015 1</ambient>
+          <diffuse>0.025 0.025 0.025 1</diffuse>
+        </material>
+      </visual>
+
+      <visual name="rim">
+        <geometry>
+          <cylinder>
+            <radius>0.34</radius>
+            <length>0.41</length>
+          </cylinder>
+        </geometry>
+      </visual>
+
+    </link>
+
+
+    <link name="rear_left_wheel_link">
+      <pose>-1.55 1.13 0.68 0 0 0</pose>
+
+      <inertial>
+        <mass>85</mass>
+        <inertia>
+          <ixx>18</ixx>
+          <iyy>18</iyy>
+          <izz>30</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="tire_collision">
+        <pose>0 0 0 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.68</radius>
+            <length>0.38</length>
+          </cylinder>
+        </geometry>
+      </collision>
+
+      <visual name="tire">
+        <pose>0 0 0 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.68</radius>
+            <length>0.38</length>
+          </cylinder>
+        </geometry>
+      </visual>
+
+      <visual name="rim">
+        <geometry>
+          <cylinder>
+            <radius>0.34</radius>
+            <length>0.41</length>
+          </cylinder>
+        </geometry>
+      </visual>
+
+    </link>
+
+
+    <link name="rear_right_wheel_link">
+      <pose>-1.55 -1.13 0.68 0 0 0</pose>
+
+      <inertial>
+        <mass>85</mass>
+        <inertia>
+          <ixx>18</ixx>
+          <iyy>18</iyy>
+          <izz>30</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="tire_collision">
+        <pose>0 0 0 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.68</radius>
+            <length>0.38</length>
+          </cylinder>
+        </geometry>
+      </collision>
+
+      <visual name="tire">
+        <pose>0 0 0 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.68</radius>
+            <length>0.38</length>
+          </cylinder>
+        </geometry>
+      </visual>
+
+      <visual name="rim">
+        <geometry>
+          <cylinder>
+            <radius>0.34</radius>
+            <length>0.41</length>
+          </cylinder>
+        </geometry>
+      </visual>
+
+    </link>
+
+
+    <!-- ========================================================= -->
+    <!-- WHEEL JOINTS -->
+    <!-- ========================================================= -->
+
+    <joint name="front_left_wheel_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>front_left_wheel_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+
+    <joint name="front_right_wheel_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>front_right_wheel_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+
+    <joint name="rear_left_wheel_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rear_left_wheel_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+
+    <joint name="rear_right_wheel_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rear_right_wheel_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- LIDAR -->
+    <!-- ========================================================= -->
+
+    <link name="lidar_link">
+      <pose>0.35 0 3.05 0 0 0</pose>
+
+      <visual name="lidar_body">
+        <geometry>
+          <cylinder>
+            <radius>0.22</radius>
+            <length>0.28</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.015 0.015 0.015 1</ambient>
+          <diffuse>0.025 0.025 0.025 1</diffuse>
+        </material>
+      </visual>
+
+      <sensor name="lidar_sensor" type="gpu_lidar">
+        <topic>/sih_ugv/lidar</topic>
+        <update_rate>10</update_rate>
+
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>720</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.14159</min_angle>
+              <max_angle>3.14159</max_angle>
+            </horizontal>
+
+            <vertical>
+              <samples>32</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.30</min_angle>
+              <max_angle>0.30</max_angle>
+            </vertical>
+          </scan>
+
+          <range>
+            <min>0.20</min>
+            <max>80.0</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+      </sensor>
+
+    </link>
+
+    <joint name="lidar_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>lidar_link</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- FRONT RGB CAMERA -->
+    <!-- ========================================================= -->
+
+    <link name="front_camera_link">
+      <pose>1.20 0 2.65 0 0 0</pose>
+
+      <visual name="camera_body">
+        <geometry>
+          <box>
+            <size>0.35 0.30 0.20</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.01 0.01 0.01 1</ambient>
+          <diffuse>0.02 0.02 0.02 1</diffuse>
+        </material>
+      </visual>
+
+      <sensor name="front_camera" type="camera">
+        <topic>/sih_ugv/front_camera/image_raw</topic>
+        <update_rate>30</update_rate>
+
+        <camera>
+          <horizontal_fov>1.396</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+            <format>R8G8B8</format>
+          </image>
+
+          <clip>
+            <near>0.05</near>
+            <far>100</far>
+          </clip>
+        </camera>
+
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+      </sensor>
+
+    </link>
+
+    <joint name="front_camera_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>front_camera_link</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- IMU -->
+    <!-- ========================================================= -->
+
+    <link name="imu_link">
+      <pose>0 0 2.25 0 0 0</pose>
+
+      <sensor name="imu_sensor" type="imu">
+        <topic>/sih_ugv/imu</topic>
+        <update_rate>100</update_rate>
+        <always_on>true</always_on>
+      </sensor>
+
+    </link>
+
+    <joint name="imu_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>imu_link</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- GPS -->
+    <!-- ========================================================= -->
+
+    <link name="gps_link">
+      <pose>-0.40 0 2.80 0 0 0</pose>
+
+      <sensor name="gps_sensor" type="navsat">
+        <topic>/sih_ugv/gps</topic>
+        <update_rate>10</update_rate>
+        <always_on>true</always_on>
+      </sensor>
+
+    </link>
+
+    <joint name="gps_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>gps_link</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- REAR ANTENNA -->
+    <!-- ========================================================= -->
+
+    <link name="antenna_link">
+      <pose>-1.45 0 3.00 0 0 0</pose>
+
+      <visual name="antenna">
+        <geometry>
+          <cylinder>
+            <radius>0.035</radius>
+            <length>1.5</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.015 0.02 0.015 1</ambient>
+          <diffuse>0.025 0.03 0.025 1</diffuse>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint name="antenna_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>antenna_link</child>
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- SENSOR TURRET / EQUIPMENT MODULE -->
+    <!-- ========================================================= -->
+
+    <link name="sensor_turret_link">
+      <pose>0.25 0 2.90 0 0 0</pose>
+
+      <inertial>
+        <mass>80</mass>
+        <inertia>
+          <ixx>15</ixx>
+          <iyy>15</iyy>
+          <izz>15</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="turret_collision">
+        <geometry>
+          <box>
+            <size>0.85 0.70 0.45</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name="turret">
+        <geometry>
+          <box>
+            <size>0.85 0.70 0.45</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.10 0.14 0.07 1</ambient>
+          <diffuse>0.15 0.21 0.10 1</diffuse>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint name="sensor_turret_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>sensor_turret_link</child>
+
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+
+      <limit>
+        <lower>-3.14159</lower>
+        <upper>3.14159</upper>
+      </limit>
+    </joint>
+
+
+  </model>
+</sdf>
